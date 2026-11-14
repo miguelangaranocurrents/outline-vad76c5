@@ -52,8 +52,10 @@ router.post(
         includeViews: false,
       });
       authorize(user, "listRevisions", document);
-      revision = Revision.buildFromDocument(document);
-      revision.id = RevisionHelper.latestId(document.id);
+      revision = Revision.buildFromDocument(
+        document,
+        RevisionHelper.latestId(document.id)
+      );
       revision.user = document.updatedBy;
     } else {
       throw ValidationError("Either id or documentId must be provided");

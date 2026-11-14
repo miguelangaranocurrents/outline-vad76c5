@@ -174,10 +174,14 @@ class Revision extends ParanoidModel<
    * Build a Revision model from a Document model
    *
    * @param document The document to build from
+   * @param id Optional ID for the unsaved revision. This must be passed to
+   * `build` rather than assigned afterwards, as Sequelize ignores assignments to
+   * a primary key that already holds the default generated UUID.
    * @returns A Revision model
    */
-  static buildFromDocument(document: Document) {
+  static buildFromDocument(document: Document, id?: string) {
     return this.build({
+      ...(id ? { id } : {}),
       title: document.title,
       icon: document.icon,
       color: document.color,
